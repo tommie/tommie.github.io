@@ -1,0 +1,53 @@
+---
+---
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8">
+  <title>{{ page.title }} &ndash; {{ site.title }}</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic&subset=latin,latin-ext">
+  <link rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+  <link rel="stylesheet" href="{{ site.baseurl }}/style/base.css">
+  <link rel="stylesheet" href="{{ site.baseurl }}/style/syntax.css">
+  {% if site.analytics.ga_tracking_id != "" and jekyll.environment == "production" %}
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      function isogram(id) { ga('create', window.decodeURIComponent(id), 'auto'); }
+      isogram('{{ site.analytics.ga_tracking_id }}');
+      ga('send', 'pageview');
+    </script>
+  {% endif %}
+
+  <body>
+    <header>
+      <div>
+        <menu>
+          <li class="{% if page.path == "index.md" %}active{% endif %}"><a href="/">Latest Articles</a></li>
+          <li class="{% if page.path == "about.md" %}active{% endif %}"><a href="/about">About</a></li>
+        </menu>
+        <span class="title">{{ page.title }}</span>
+        <span class="subtitle">{{ site.title }}</span>
+      </div>
+    </header>
+
+    <main>
+      {{ content }}
+    </main>
+
+    <footer>
+      <div class="copyright">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+        <div>
+          <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">{{ site.title }}</span>
+          by <a xmlns:cc="http://creativecommons.org/ns#" href="/" property="cc:attributionName" rel="cc:attributionURL">tommie</a>
+          is licensed under a <a rel="license2" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
