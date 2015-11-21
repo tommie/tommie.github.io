@@ -81,8 +81,10 @@ body > header menu > li.active {
 }
 
 body > main {
-    border-left: 1px solid rgb(200, 195, 230);
-    padding: 3ex 2ex 1ex 2ex;
+    padding-left: 3ex;
+    padding-right: 3ex;
+    padding-top: 1ex;
+    padding-bottom: 2ex;
 }
 
 body > main > p:first-child {
@@ -93,7 +95,7 @@ body > header > div,
 body > main,
 body > footer {
     margin: 0 auto;
-    max-width: 80ex;
+    max-width: 90ex;
 }
 
 body > main > section:first-child > h1 {
@@ -134,6 +136,15 @@ p.ingress {
     font-style: italic;
 }
 
+@media screen and (min-width: 600px) {
+    body > main {
+        border-left: 1px solid rgb(200, 195, 230);
+        padding-left: 6ex;
+        padding-right: 6ex;
+        padding-top: 4ex;
+    }
+}
+
 main > section > footer {
     color: rgb(128, 128, 128);
     padding-right: 3em;
@@ -165,11 +176,18 @@ body > footer {
     align-items: flex-end;
     display: flex;
     justify-content: space-between;
-    margin-top: 3ex;
+    margin: 4ex auto;
+    padding: 0 6ex;
+}
+
+body > footer {
+    border-top: 1px solid rgb(200, 195, 230);
+    font-size: x-small;
+    padding-top: 1ex;
 }
 
 .copyright {
-    align-items: center;
+    align-items: flex-start;
     display: flex;
     justify-content: start;
     font-size: small;
@@ -177,12 +195,30 @@ body > footer {
 
 .copyright [rel='license'] {
     display: block;
+    opacity: 0.05;
     padding-right: 1em;
+    position: absolute;
 }
 
 .copyright [rel='license'] + div {
     flex: 1;
     margin-right: 2em;
+}
+
+@media screen and (min-width: 600px) {
+    body > footer {
+        border-top: none;
+        padding-top: 0;
+    }
+
+    .copyright {
+        align-items: center;
+    }
+
+    .copyright [rel='license'] {
+        opacity: 1;
+        position: static;
+    }
 }
 
 /* Fonts */
