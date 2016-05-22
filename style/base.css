@@ -104,7 +104,9 @@ body > main > section:first-child > h1 {
 
 body > main > pre,
 blockquote,
-figure.highlight {
+figure.highlight,
+div.highlighter-rouge > pre,
+li > pre {
     margin-before: 5ex;
     -webkit-margin-before: 5ex;
     margin-after: 5ex;
