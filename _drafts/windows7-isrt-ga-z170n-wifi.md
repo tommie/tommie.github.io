@@ -130,7 +130,7 @@ know how:
    The drivers come from the Gigabyte driver CD in `F:`. Add all
    drivers from the `boot` directory. My USB stick is `D:` here:
 
-   ```
+   ```console
    md %TEMP%\wim
 
    dism /Mount-Image /ImageFile:D:\sources\boot.wim /Index:1 /MountDir:%TEMP%\wim
@@ -149,7 +149,7 @@ know how:
    Note that you want to add it to all images in `boot.wim`, and at
    least to the image you are going to install in `install.wim`. In my case, running
 
-   ```
+   ```console
    dism /Get-ImageInfo /ImageFile:D:\sources\boot.wim
    ```
 
@@ -181,7 +181,7 @@ so instead I just relocated my `Documents` and `Downloaded`
 directories to the HDD. I also set up Steam to use the HDD by default
 for installations.
 
-Windws Update is stuck
+Windows Update is stuck
 ----------------------
 
 I realized after all this that Windows update was stuck in searching
