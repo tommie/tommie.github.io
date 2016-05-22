@@ -1,5 +1,6 @@
 ---
 title: C Logical-And With Optimization
+categories: [programming, valgrind, xppaut]
 ---
 I have been working on refactoring a software called
 [XPPAUT](http://www.math.pitt.edu/~bard/xpp/xpp.html) for a while
