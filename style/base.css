@@ -102,6 +102,11 @@ body > main > section:first-child > h1 {
     margin-top: 0;
 }
 
+div.highlight {
+    border-left: 3px solid rgb(100, 100, 200);
+    padding-left: 2ex;
+}
+
 body > main > pre,
 blockquote,
 figure.highlight,
