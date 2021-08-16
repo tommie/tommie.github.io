@@ -1,3 +1,4 @@
+{% raw %}
 <div id="vue-app">
   <form v-on:submit.prevent="">
     <div>
@@ -19,11 +20,11 @@
 
   <div class="image-board">
     <div class="image-container">
-      <img :src="imageURL">
+      <img v-bind:src="imageURL">
       <div class="image-grid fill">
         <div v-for="row in gridRows">
-          <div :class="{ 'image-tile': true, selected: posEqual(tile.pos, selectedViewPos) }"
-               :style="tile.style"
+          <div v-bind:class="{ 'image-tile': true, selected: posEqual(tile.pos, selectedViewPos) }"
+               v-bind:style="tile.style"
                draggable
                v-on:dragstart="onDragStartTile($event, tile.pos)"
                v-on:dragover="onDragOverTile"
@@ -37,8 +38,8 @@
           <!-- Note that because Jekyll also uses double braces for templating,
                VueJs is reconfigured to use brace-parenthesis instead. -->
           <p>
-            Solved in {( formatDuration(duration) )},
-            and {( formatQuantity(numMoves, 'move', 'moves') )}!
+            Solved in {{ formatDuration(duration) }},
+            and {{ formatQuantity(numMoves, 'move', 'moves') }}!
           </p>
           <button v-on:click="onNewGame">One more!</button>
         </div>
@@ -46,3 +47,4 @@
     </div>
   </div>
 </div>
+{% endraw %}

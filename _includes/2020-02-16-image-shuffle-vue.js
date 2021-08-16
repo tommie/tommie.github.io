@@ -1,7 +1,4 @@
 new Vue({
-  // Use custom delimiters to avoid interfering with Jekyll templating
-  // (which is used for this blog).
-  delimiters: ["{(",")}"],
   el: '#vue-app',
   data () {
     return {
