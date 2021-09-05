@@ -28,8 +28,8 @@ prefix_for_exec() {
 case "$1" in
 start)
     drycat=
-    [ "$UFW_DRY_RUN" = yes ] || drycat=drycat
-    [ "$UFW_DRY_RUN" = yes ] || dryecho=echo
+    [ "$UFW_DRY_RUN" != yes ] || drycat=drycat
+    [ "$UFW_DRY_RUN" != yes ] || dryecho=echo
 
     for ipxtables in $(get_ipXtables); do
         if [ "$MANAGE_BUILTINS" = yes ]; then
@@ -37,6 +37,14 @@ start)
                 $dryecho "$ipxtables" -F DOCKER-USER
             fi
         fi
+
+        # Using iptables-restore to create these would
+        # flush them even with --noflush.
+        for auxchain in DOCKER-ISOLATION-STAGE-1 DOCKER; do
+            if ! "$ipxtables" -n -L "$auxchain" >/dev/null 2>&1; then
+                $dryecho "$ipxtables" -N "$auxchain"
+            fi
+        done
 
         # Copies UFW's FORWARD chain rules into chain
         # DOCKER-USER. Links FORWARD to DOCKER-USER.
@@ -46,8 +54,12 @@ start)
                 cat <<EOF
 :DOCKER-USER - [0:0]
 -I FORWARD -j DOCKER-USER
--A DOCKER-USER -j DOCKER-ISOLATION-STAGE-1
--A DOCKER-USER -j DOCKER
+EOF
+            fi
+            if ! "$ipxtables" -C DOCKER-USER -j DOCKER-ISOLATION-STAGE-1 >/dev/null 2>&1; then
+                cat <<EOF
+-I DOCKER-USER -j DOCKER
+-I DOCKER-USER -j DOCKER-ISOLATION-STAGE-1
 EOF
             fi
 
@@ -79,7 +91,7 @@ EOF
 stop)
     if [ "$MANAGE_BUILTINS" = yes ]; then
         dryecho=
-        [ "$UFW_DRY_RUN" = yes ] || dryecho=echo
+        [ "$UFW_DRY_RUN" != yes ] || dryecho=echo
         for ipxtables in $(get_ipXtables); do
             "$ipxtables-save" \
                 | sed -e 's/^-A\( DOCKER-USER -j ufw.*-forward\)$/-D\1/ p ; d' \
