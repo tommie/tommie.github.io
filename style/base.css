@@ -247,7 +247,7 @@ body,
 h1,
 .notice {
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: 11pt;
+    font-size: 12pt;
 }
 
 h1 {
@@ -256,6 +256,6 @@ h1 {
 
 body > main {
     font-family: 'Libre Baskerville', serif;
-    font-size: 10pt;
-    line-height: 16pt;
+    font-size: 11pt;
+    line-height: 18pt;
 }
