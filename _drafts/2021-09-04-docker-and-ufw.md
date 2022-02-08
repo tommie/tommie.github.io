@@ -144,8 +144,8 @@ What's the problem? If I enabled UFW now, it would add its rules to
 long as you trust your Docker's published ports, that's fine. You can
 see `DOCKER` containing explicit rules for the published ports. That's
 a POLA (policy of least astonishment) violation, but not the end of
-the world for my needs. But, of course, this is now a challenge, and
-it must be attempted.
+the world for my needs. But solving this inversion of control is now a
+challenge, and it must be accepted.
 
 What if UFW starts before Docker? Well, Docker does a
 [prepend](https://github.com/moby/moby/blob/2b70006e3bfa492b8641ff443493983d832955f4/libnetwork/iptables/iptables.go#L651)
@@ -162,14 +162,17 @@ from each other. Together, for each network, they essentially say "if
 this is routed to another interface, it must not be a Docker network
 interface." The rules in `FORWARD` can then deal only with safe pairs
 of networks, the way you'd normally split ingress/egress rules. Docker
-allows anything out, but only published ports in from the outside.
+allows anything out, but only published ports in from the
+outside. This, combined with the UFW ordering issue, is a big no-no if
+you want to enforce egress rules. Remember that Docker relies on the
+`FORWARD` chain rather than `OUTPUT`.
 
 ## Previous Work
 
 I mentioned above two proposed fixed. Let's also mention that you can
 disable Docker's IPTables modifications with `--iptables=false`. I
 wouldn't call that "integration". More like forced arbitration. Ugly,
-and will probably bite my behind at some point.
+and would probably bite my behind at some point.
 
 I'll discuss two of the first solutions I found. Neither of them
 support IPv6, but the generalization is trivial.
@@ -219,8 +222,8 @@ Chain DOCKER-USER (1 references)
 The `ufw-user-forward` is normally invoked from `ufw-before-forward`,
 and that's being circumvented.  It also means we're potentially
 invoking `ufw-user-forward` twice, which isn't really a problem with
-UFW, but also not clean. There's a reason for this, as we also want
-the Docker isolation rules to take effect, especially for internal
+UFW, but also not clean. This is problematic as we also want the
+Docker isolation rules to take effect, especially for internal
 traffic. Essentially, this battles wanting to say
 
     Docker-internal || (UFW && Docker) -> ACCEPT
@@ -230,7 +233,7 @@ conferring with the other. Instead, we end up with expressing
 
     User-UFW || Docker || UFW -> ACCEPT
 
-Arguably, we don't want UFW to handle Docker-originating traffic, but
+Arguably, we don't want UFW to handle Docker-internal traffic, but
 that's a matter of preference.
 
 ### p1ngouin
@@ -248,13 +251,13 @@ If you add a new (real) interface, it won't be protected by UFW until
 you remember to update the rules. This is a POLA violation, and a
 security concern.
 
-The one thing this solution does wrong is the changes to
+The one thing this solution does really wrong is the changes to
 `before.init`. UFW itself is careful
 [not to remove rules](https://git.launchpad.net/ufw/tree/src/ufw-init-functions#n95)
 it's added to built-in chains. We (from the PoV of UFW) should now
 consider `DOCKER-USER` a built-in chain, so flushing that without
-`$MANAGE_BUILTINS` feels wrong. Deleting `ufw-user-input` is wrong for
-the same reason.
+requiring `$MANAGE_BUILTINS` feels wrong. Deleting `ufw-user-input` is
+wrong for the same reason.
 
 ### Ferm
 
@@ -271,17 +274,29 @@ containers are hostile against each other in a given network, they
 shouldn't be on the same network. It's a controlled environment. Just
 don't open ports you don't use...)
 
-In practice, this means we'll either have to use a list of all Docker
-network interfaces, or of all non-Docker network interfaces. Which one
-is better? Well, we want UFW to protect us from mistakes, so
-specifically ignoring Docker networks seems better than only applying
-it to specific external interfaces. What are the Docker network
-interface names again?
+I can see two ways of using UFW, for ingress traffic:
+
+1. **UFW allows** and it doesn't matter what ports Docker have
+   published; UFW must explicitly allow.
+2. **UFW denies** where it's enough for Docker to publish a port, but
+   UFW may explicitly deny it.
+
+In the first scenario, UFW user rules will have allow rules for each
+externally available Docker port. In the second, it will normally be
+empty, but may contain deny/reject rules for exceptions. I prefer (2)
+here, because I have control over port publishing through Docker
+Compose already. In a setting with protecting against mistakes, or
+where security is more important than simplicity, I would prefer (1).
+
+When it comes to egress traffic, Docker doesn't have a preference,
+since it allows anything. In this case, either (1) or (2) makes sense,
+depending on your security circumstances. So this ends up being the
+same as for ingress traffic.
 
 ### Coming Up With a Merged Rule Ordering
 
 Let's look more closely at what Docker and UFW do with IPTables, and
-come up with a sensible ordering.
+come up with sensible orderings for each scenario.
 
 #### Docker
 
@@ -295,16 +310,13 @@ we might end up with
 # Should override UFW.
 -A FORWARD -j DOCKER-ISOLATION-STAGE-1
    -A DOCKER-ISOLATION-STAGE-1 -i docker0 ! -o docker0 -j DOCKER-ISOLATION-STAGE-2
-   -A DOCKER-ISOLATION-STAGE-1 -j RETURN
    -A DOCKER-ISOLATION-STAGE-2 -o docker0 -j DROP
-   -A DOCKER-ISOLATION-STAGE-2 -j RETURN
 
-# Should maybe override UFW (if Docker is authoritative; my preference for ease of use)
+# Should maybe override UFW (if Docker publish is enough).
 -A FORWARD -o docker0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A FORWARD -o docker0 -j DOCKER
    -A DOCKER -d 172.23.0.15/32 ! -i docker0 -o docker0 -p tcp -m tcp --dport 25 -j ACCEPT
 
-# Should maybe override UFW (if Docker is authoritative; my preference for ease of use)
 -A FORWARD -i docker0 ! -o docker0 -j ACCEPT
 -A FORWARD -i docker0 -o docker0 -j ACCEPT
 ```
@@ -313,11 +325,11 @@ There are three parts:
 
 1. **Isolation**, which should override whatever UFW does, because
    it's essential to the contract Docker provides.
-2. **Ingress routing**, which depends on your preference. I prefer it
-   this way to avoid having to both publish ports and update UFW
-   rules.
+2. **Ingress routing**, which depends on your preference. Either (1)
+   these shouldn't be allowed to match, or (2) they're okay.
 3. **Egress routing**, which Docker for some reason splits into two
-   cases.
+   cases. UFW has nothing similar to these, so either (1) UFW user
+   rules must be added explicitly, or (2) we trust Docker.
 
 One thing to note is that the jump to `DOCKER` is inserted once per
 interface, but all rules in the `DOCKER` chain already matches on
@@ -336,10 +348,11 @@ And now for the UFW rules:
 -A ufw-before-forward -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A ufw-before-forward -p icmp -m icmp --icmp-type 3 -j ACCEPT
 
-# Should maybe override Docker (if UFW is authoritative; NOT my preference)
+# Should override Docker.
 -A FORWARD -j ufw-*-forward
    -A ufw-before-forward -j ufw-user-forward
    -A ufw-user-forward -p tcp -m tcp --dport 22 -m comment --comment "\'dapp_SSH\'" -j ACCEPT
+   -A ufw-user-forward -p tcp -m tcp --dport 25 -m comment --comment "\'dapp_SMTP\'" -j DROP
 
 # Should not override Docker. Not used in default configuration, or by user rules, so dead code.
 -A ufw-skip-to-policy-forward -j DROP
@@ -354,13 +367,11 @@ while reducing the number of logical groups:
    egress would be allowed by Docker rules anyway. I think it's fine,
    since there'll likely not be any routing rules for unrelated ICMP
    messages anyway.
-2. **Ingress new**, again depending on preferences. In my case, I
-   don't want to use this, so it'll be empty. If it matters, then we
-   need to care about network isolation. Nothing else Docker does
-   should matter.
+2. **Ingress new**, again depending on preferences. UFW *can* be
+   overriding in scenario (1) and *must* be overriding in (2).
 3. **Helper rules** that are unused. This pattern is used in the
-   `INPUT` change to essentially `RETURN` to the policy. The issue
-   here is that we'd want to run Docker rules rather than just drop
+   `INPUT` chain to essentially `RETURN` to the policy. The issue here
+   is that we'd want to run Docker rules rather than just drop
    out. But since this isn't used, I won't bother.
 
 ### Making UFW Authoritative
@@ -378,36 +389,35 @@ my preferred semantics, I think we arrive at
 -A FORWARD -i docker0 -o docker0 -j ACCEPT
 
 -A DOCKER-USER -j DOCKER-ISOLATION-STAGE-1
--A DOCKER-USER -j DOCKER
-   -A DOCKER -d 172.23.0.15/32 ! -i docker0 -o docker0 -p tcp -m tcp --dport 25 -j ACCEPT
 -A DOCKER-USER -j ufw-*-forward
 
 -A ufw-before-forward -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A ufw-before-forward -p icmp -m icmp --icmp-type 3 -j ACCEPT
 -A ufw-before-forward -j ufw-user-forward
-   -A ufw-user-forward -p tcp -m tcp --dport 22 -m comment --comment "\'dapp_SSH\'" -j ACCEPT
+   -A ufw-user-forward -p tcp -m tcp --dport 25 -m comment --comment "\'dapp_SMTP\'" -j DENY
 ```
 
 Notice that the `FORWARD` chain is exacly like Docker does it. UFW
 rules have been moved into `DOCKER-USER`, and we run the network
-isolation drop rules first, then Docker ingress-new rules.
-
-The meat of the solution is to simply move the UFW rules from
-`FORWARD` into `DOCKER-USER` in `/etc/ufw/after.init`:
+isolation drop rules first. We must allow UFW user deny rules before
+Docker ingress-new rules:
 
 ```bash
 {% include 2021-09-04-ufw-after-init.sh %}
 ```
 
-Adding the two other Docker chains is trivial.
+And now we can do the example entry used above with
+
+```shell
+$ ufw route deny SMTP
+```
+
+to e.g. temporarily deny a Docker-published SMTP port.
 
 #### Restricting Docker Published Ports
 
-For completeness, if you don't want Docker published ports to matter,
-it's a bit more work.
-
-> **WARNING** I haven't put much thought into this, and it
->             might be more wrong than the rest of this post.
+If you don't want Docker published ports to auto-allow, it's almost
+the same, except we need to avoid the `-j DOCKER` rules matching:
 
 ```bash
 -A FORWARD -j DOCKER-USER
@@ -424,23 +434,39 @@ it's a bit more work.
 -A ufw-before-forward -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A ufw-before-forward -p icmp -m icmp --icmp-type 3 -j ACCEPT
 -A ufw-before-forward -j ufw-user-forward
-   -A ufw-user-forward -p tcp -m tcp --dport 22 -m comment --comment "\'dapp_SSH\'" -j ACCEPT
-   -A ufw-user-forward ! -i docker0 -o docker0 -j DROP
+   -A ufw-user-forward -p tcp -m tcp --dport 25 -m comment --comment "\'dapp_SMTP\'" -j ACCEPT
+   -A ufw-user-forward -i eth0 -j DROP
 ```
 
-Your UFW rules now need to know about all Docker interfaces, which
-isn't nice, but it's even worse for non-default networks!
+This last rule means none of the `-j DOCKER` rules will ever matter
+for external traffic. Sadly, your UFW rules now need to know about all
+external interfaces, which isn't nice. We could drop "non-Docker
+interfaces", but that means UFW would be circumvented by adding a new
+Docker network. Now we only have the risk when adding an external
+interface, which isn't as likely to happen by accident.
+
+Now we need e.g.
+
+```shell
+$ ufw route allow SMTP
+$ ufw route deny in on eth0
+```
+
+to create our user rules.
 
 ### Docker (Compose) Bridge Network Interface Names
 
-As we saw at the beginning, the default Docker bridge network is
-called `docker0`. But Docker Compose creates a separate network for
-each project (directory), and they're named like `br-36805a67e4f2` by
-default. (The hex string is the abbreviated Docker network identifier,
-see `docker network ls`.) This isn't particularly nice to spread
-across configuration files. We need a better API.
+In case you need to reference Docker bridge networks, it might be
+useful to make them easier on the eye. As we saw at the beginning, the
+default Docker bridge network is called `docker0`. Docker Compose
+creates a separate network for each project (directory), and they're
+named like `br-36805a67e4f2` by default. (The hex string is the
+abbreviated Docker network identifier, see `docker network ls`.)  This
+isn't particularly nice to spread across configuration files. We need
+a better API.
 
-Luckily, Docker allows us to provide an interface name. In a Compose file, this looks like
+Luckily, Docker allows us to provide an interface name. In a Compose
+file, this looks like
 
 ```yaml
 networks:
@@ -449,7 +475,8 @@ networks:
        com.docker.network.bridge.name: "dockercompose_default"
 ```
 
-You can of course rename interfaces for other networks too. And we end up with
+You can of course rename interfaces for other networks too. And we end
+up with
 
 ```shell
 $ docker network ls
