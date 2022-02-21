@@ -15,7 +15,7 @@ adjustments needed, and the ground coffee isn't particularly
 uniform. This is well known and why people don't recommend the
 Virtuoso for espresso.
 
-![Isometric view of the CAD model for a scale to fit the Virtuoso](/assets/2022-02-21-virtuoso-scale.png)
+<img alt="Isometric view of the CAD model for a scale to fit the Virtuoso" src="/assets/2022-02-21-virtuoso-scale.png" class="small">
 
 I had spent many weeks trying to make a [scale for the
 Virtuoso](https://cad.onshape.com/documents/42589db6b3cab6c39dec939f/w/87505507d00bc98e5bff7f46/e/a2b25a5eca60e523abdbe7ee),
@@ -57,7 +57,7 @@ Specialità has a display so you can program two timers (single and
 double shot). Since I wanted repeatability, a timer with a 100 ms
 precision sounded useful.
 
-![Mignon and Virtuoso side-by-side](/assets/2022-02-21-mignon-virtuoso.jpg)
+<img alt="Mignon and Virtuoso side-by-side" src="/assets/2022-02-21-mignon-virtuoso.jpg" class="small">
 
 Unpacking the Mignon wasn't exactly an Apple experience, but it was
 certainly well padded. The message "Fragile - Made in Italy" may have
@@ -81,7 +81,7 @@ to change the display contrast (although the manual says I should),
 and it never blacks out the display. Because of the always-lit
 display, it looks a bit cluttered.
 
-![Victoria and Mignon side-by-side](/assets/2022-02-21-victoria-mignon.jpg)
+<img alt="Victoria and Mignon side-by-side" src="/assets/2022-02-21-victoria-mignon.jpg" class="small">
 
 It would be fun to replace the portafilter holder with a scale, but I
 don't think that's necessary, so I'll spend that time on something
