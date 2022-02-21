@@ -15,15 +15,19 @@ adjustments needed, and the ground coffee isn't particularly
 uniform. This is well known and why people don't recommend the
 Virtuoso for espresso.
 
-I had spent many weeks trying to make a scale for the Virtuoso, with
-an integrated stand for a portafilter, instead of using the existing
-bucket. It never worked right, because it kept jamming against the
-inner walls of the grinder. Made worse by the chute not being
-centered, which means the 58 mm portafilter had to sit very close to
-one side. That in turn made it difficult to both make a balanced
-holder, and one that filled the portafilter without overflowing one
-side. Oh well, it doesn't matter now anyway. It was a fun exercise in
-using the OnShape parametric CAD service to draw up a curved bucket.
+![Isometric view of the CAD model for a scale to fit the Virtuoso](assets/2022-02-21-virtuoso-scale.png)
+
+I had spent many weeks trying to make a [scale for the
+Virtuoso](https://cad.onshape.com/documents/42589db6b3cab6c39dec939f/w/87505507d00bc98e5bff7f46/e/a2b25a5eca60e523abdbe7ee),
+with an integrated stand for a portafilter, instead of using the
+existing bucket. It never worked right, because it kept jamming
+against the inner walls of the grinder. Made worse by the chute not
+being centered, which means the 58 mm portafilter had to sit very
+close to one side. That in turn made it difficult to both make a
+balanced holder, and one that filled the portafilter without
+overflowing one side. Oh well, it doesn't matter now anyway. It was a
+fun exercise in using the OnShape parametric CAD service to draw up a
+curved bucket.
 
 When searching for a new grinder, I was looking for something for
 espresso, as well as quiet and compact. It seemed like these were the
