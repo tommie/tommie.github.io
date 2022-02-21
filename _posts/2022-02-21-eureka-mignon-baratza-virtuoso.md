@@ -15,7 +15,7 @@ adjustments needed, and the ground coffee isn't particularly
 uniform. This is well known and why people don't recommend the
 Virtuoso for espresso.
 
-![Isometric view of the CAD model for a scale to fit the Virtuoso](assets/2022-02-21-virtuoso-scale.png)
+![Isometric view of the CAD model for a scale to fit the Virtuoso](/assets/2022-02-21-virtuoso-scale.png)
 
 I had spent many weeks trying to make a [scale for the
 Virtuoso](https://cad.onshape.com/documents/42589db6b3cab6c39dec939f/w/87505507d00bc98e5bff7f46/e/a2b25a5eca60e523abdbe7ee),
