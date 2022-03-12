@@ -18,13 +18,11 @@ Zürich.
 Before that, I was one of the first employees of Spotify, back in
 2007, where I built the "reverse proxy" that all clients connected to,
 led some backend infrastructure work, and cared deeply about improving
-production monitoring. On December 31st, 2008, I caused all reverse
-proxies to die instantly, because a leap second was inserted, and I
-had an assertion that checked that time was monotonically
-increasing. That's when I learned that, somehow,
-[`CLOCK_MONOTONIC`](https://man7.org/linux/man-pages/man2/clock_getres.2.html)
-isn't actually monotonic (but `CLOCK_MONOTONIC_RAW` is.) No one seems
-to have noticed.
+production monitoring. The first machines this was running on were
+8-core, and we could do 80k connections easily, of which 8k were
+actively streaming. At some point, a load-balancing issue caused 200k
+connections per machine, and I know for sure that was beyond the upper
+bound. Still happy with the 80k normal load.
 
 * Data wants to be free, so feel free to use what I write for any
   constructive, respectable and legal purpose.
