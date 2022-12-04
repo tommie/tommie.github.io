@@ -119,8 +119,11 @@ p > img.small {
 }
 
 div.highlight {
+    background-color: rgba(100, 100, 200, .05);
     border-left: 3px solid rgb(100, 100, 200);
-    padding-left: 2ex;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 1ex 3ex;
 }
 
 div.highlighter-rouge {
@@ -144,6 +147,11 @@ li > pre {
 
 blockquote {
     font-style: italic;
+}
+
+/* A list item with multiple paragraphs. */
+li > p:first-child {
+    margin-block-start: 0;
 }
 
 .dim {
@@ -259,6 +267,12 @@ h1,
 
 h1 {
     font-size: 18pt;
+}
+
+h2 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18pt;
+    margin-top: 36pt;
 }
 
 body > main {
