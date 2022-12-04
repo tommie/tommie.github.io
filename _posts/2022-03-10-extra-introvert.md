@@ -60,7 +60,7 @@ work for me, but there are many more ways to enjoy the company of
 
 ----
 
-Two weeks ago, I had dragged my feel to call the GP for a travel
+Two weeks ago, I had dragged my feet to call the GP for a travel
 vaccination. Africa, here we come! The date is closing in, and I
 really need to get it done for it to protect me. Because talking to
 someone on the phone is the worst way of talking to strangers, this
