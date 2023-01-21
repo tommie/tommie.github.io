@@ -3,15 +3,8 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
 
 const E12 = [1, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.8, 4.7, 5.6, 6.8, 8.2];
-
-function resistorRatio(Vout, Vref) {
-    // a/(a+b)     = vr/vo = vratio
-    // a           = vratio*(a+b)
-    // a*(1-vratio) = b*vratio
-    // a/b         = vratio/(1-vratio)
-    const vratio = Vref / Vout;
-    return vratio / (1 - vratio);
-}
+const E24 = [1.0, 1.1, 1.2, 1.3, 1.5, 1.6, 1.8, 2.0, 2.2, 2.4, 2.7, 3.0, 3.3, 3.6, 3.9, 4.3, 4.7, 5.1, 5.6, 6.2, 6.8, 7.5, 8.2, 9.1];
+const SERIES = {E12, E24};
 
 function magnitude10(ratio) {
     return Math.pow(10, Math.round(Math.log10(ratio)));
@@ -64,7 +57,7 @@ function selectResistors(Vout, Vref, Rtot, frac, series) {
         return [[0, Infinity, Vout / Vref - 1, 0]];
     }
     const ratio = Vref / Vout;
-    let pairs = findBestRatioPairs(ratio, E12);
+    let pairs = findBestRatioPairs(ratio, series);
     pairs = pairs.slice(0, Math.ceil(pairs.length * frac));
     pairs = matchImpedance(Rtot, pairs);
     return pairs;
@@ -73,6 +66,9 @@ function selectResistors(Vout, Vref, Rtot, frac, series) {
 createApp({
     data() {
         return {
+            series: SERIES,
+            selectedSeries: 'E12',
+
             vout: 3.3,
             vref: 2.5,
             rtot: 10,
@@ -80,7 +76,7 @@ createApp({
     },
     computed: {
         resistors() {
-            return selectResistors(this.vout, this.vref, this.rtot, 0.1, E12);
+            return selectResistors(this.vout, this.vref, this.rtot, 0.1, SERIES[this.selectedSeries]);
         },
     },
 }).mount('#psuApp');

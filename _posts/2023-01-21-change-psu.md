@@ -26,9 +26,9 @@ It would certainly be the nicest way of solving the problem.
 The second option just requires changing the voltage divider that sets the feedback voltage (R5 and R6).
 That's much cheaper.
 The problem now is figuring out which pair of resistors I should use.
-The original circuit has 6.8 and 2.2 k&Omega; feeding the [TL431](https://www.st.com/resource/en/datasheet/tl431.pdf) reference pin, which in turn drives the optocoupler that feeds back to the mains voltage side.
+The original circuit has 6.2 and 2.2 k&Omega; feeding the [TL431](https://www.st.com/resource/en/datasheet/tl431.pdf) reference pin, which in turn drives the optocoupler that feeds back to the mains voltage side.
 The steady-state reference voltage is 2.5 V for the TL431, according to the datasheet.
-To check, `2.5/(6.8/(2.2+6.8)) = 3.3`, fits the bill.
+To check, `2.5/(6.2/(2.2+6.2)) = 3.4`, fits the bill.
 
 If we had a 0.7 V overshoot now, lowering the voltage will probably net us around the same again, so we need to lower this to at most 2.9 V.
 
@@ -57,7 +57,7 @@ A value too high runs the risk of letting the TL431's input impedance interfere 
 The datasheet suggests the impedance is over 600 k&Omega; (4 µA at 2.5 V).
 10 k&Omega; is a common value to aim for, but isn't critical as long as it is much smaller than the 600 k&Omega;.
 
-This is all fairly easy to compute with JavaScript:
+Here is a calculator:
 
 {% include 2023-01-21-change-psu.html %}
 

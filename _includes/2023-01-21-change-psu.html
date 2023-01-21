@@ -3,37 +3,28 @@
   <form class="input">
     <table class="input">
       <tr>
+        <td><label for="series">Series</label></td>
         <td>
-          <label for="vout">V<sub>out</sub></label>
+          <select name="series" v-model="selectedSeries">
+            <option v-for="(_, name) in series" v-bind:key="name">{{ name }}</option>
+          </select>
         </td>
-        <td>
-          <input type="number" name="vout" v-model="vout">
-        </td>
-        <td>
-          V
-        </td>
+        <td></td>
       </tr>
       <tr>
-        <td>
-          <label for="vref">V<sub>ref</sub></label>
-        </td>
-        <td>
-          <input type="number" name="vref" v-model="vref">
-        </td>
-        <td>
-          V
-        </td>
+        <td><label for="vout">V<sub>out</sub></label></td>
+        <td><input type="number" name="vout" step="0.1" min="0" v-model="vout"></td>
+        <td>V</td>
       </tr>
       <tr>
-        <td>
-          <label for="rtot">R<sub>A+B</sub></label>
-        </td>
-        <td>
-          <input type="number" name="rtot" v-model="rtot">
-        </td>
-        <td>
-          k&Omega;
-        </td>
+        <td><label for="vref">V<sub>ref</sub></label></td>
+        <td><input type="number" name="vref" step="0.1" min="0" v-model="vref"></td>
+        <td>V</td>
+      </tr>
+      <tr>
+        <td><label for="rtot">R<sub>A+B</sub></label></td>
+        <td><input type="number" name="rtot" step="1" min="0" v-model="rtot"></td>
+        <td>k&Omega;</td>
       </tr>
     </table>
   </form>
@@ -73,6 +64,10 @@
  #psuApp table.input,
  #psuApp table.respairs {
      margin: 0 auto;
+ }
+ #psuApp table.input input[type="number"] {
+     max-width: 10ex;
+     text-align: right;
  }
 
  #psuApp .respairs {
