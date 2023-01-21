@@ -1,0 +1,89 @@
+{% raw %}
+<div id="psuApp">
+  <form class="input">
+    <table class="input">
+      <tr>
+        <td>
+          <label for="vout">V<sub>out</sub></label>
+        </td>
+        <td>
+          <input type="number" name="vout" v-model="vout">
+        </td>
+        <td>
+          V
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="vref">V<sub>ref</sub></label>
+        </td>
+        <td>
+          <input type="number" name="vref" v-model="vref">
+        </td>
+        <td>
+          V
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="rtot">R<sub>A+B</sub></label>
+        </td>
+        <td>
+          <input type="number" name="rtot" v-model="rtot">
+        </td>
+        <td>
+          k&Omega;
+        </td>
+      </tr>
+    </table>
+  </form>
+  <div class="results">
+    <table class="respairs" border="1">
+      <caption>Resistor Pairs</caption>
+      <thead>
+        <tr>
+          <th>R<sub>5</sub> (k&Omega;)</th>
+          <th>R<sub>6</sub> (k&Omega;)</th>
+          <th>Voltage Error</th>
+          <th>Impedance Error</th>
+          <th>Leakage Power</th>
+        </tr>
+      </thead>
+      <tr v-for="pair in resistors" v-bind:key="`${pair[0]},${pair[1]}`">
+        <td>{{ pair[0].toPrecision(2) }}</td>
+        <td>{{ pair[1].toPrecision(2) }}</td>
+        <td>{{ (100 * pair[2]).toFixed(0) }}%</td>
+        <td>{{ (100 * pair[3]).toFixed(0) }}%</td>
+        <td>{{ (vout * vout / (pair[0] + pair[1])).toFixed(2) }} mW</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<style>
+ #psuApp form.input {
+     background-color: rgba(0, 100, 0, .2);
+     padding: 2ex 2ex;
+ }
+ #psuApp div.results {
+     background-color: rgba(150, 150, 0, .2);
+     padding: 2ex 2ex;
+ }
+
+ #psuApp table.input,
+ #psuApp table.respairs {
+     margin: 0 auto;
+ }
+
+ #psuApp .respairs {
+     border-collapse: collapse;
+ }
+ #psuApp .respairs td {
+     text-align: right;
+ }
+ #psuApp .respairs th,
+ #psuApp .respairs td {
+     padding: 1ex;
+ }
+</style>
+{% endraw %}
