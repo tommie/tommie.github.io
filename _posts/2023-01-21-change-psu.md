@@ -36,7 +36,19 @@ But, if we just feed the output voltage directly, it will end up at 2.5 V, and o
 This is within the spec of the JDY-25M.
 So just removing the resistor closest to ground is enough.
 
-## But, what if it wasn't that simple?
+## Removing the Resistor
+
+Doing that gives an output of 2.9 V, with overshoot up to 3.6 V.
+That's 400 mV higher than what I had expected.
+Good enough, but why?
+There's a bit of a drop in R5, but that shouldn't be more than 10 mV.
+
+The optocoupler has a forward voltage of 1.2 V.
+Looking at figure 14 in the TL431 datasheet, V<sub>KA</sub> can leak below 2.5 V.
+I'm guessing this is driving the TL431 too low, and it stops doing the right thing.
+Playing nice, I should probably set the TL431 to 2.9 V output with a divider.
+
+## Computing Resistors
 
 More generally, the issue is finding two resistors in the standard E12 series that come close to a desired output voltage.
 Aside from that, we also need to care about the total impedance.
