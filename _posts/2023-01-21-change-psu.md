@@ -8,9 +8,9 @@ First time, it went well, and the beacon beaconed.
 The second time, the thing blew up.
 Voltage overshoot? Yepp.
 
-It uses the [THX208](http://www.thx.com.cn/a/chanpinzhongxin/nenyuanzhixing5jinenxiao/50.html) SPMS chip and looks [like this](https://remont-aud.net/publ/stati/istochniki_pitanija/kitajskij_blok_pitanija_na_thx208/32-1-0-455) (credit to KARVAC on remont-aud.net):
+It uses the [THX208](http://www.thx.com.cn/a/chanpinzhongxin/nenyuanzhixing5jinenxiao/50.html) SPMS chip and looks [like this](https://remont-aud.net/publ/stati/istochniki_pitanija/kitajskij_blok_pitanija_na_thx208/32-1-0-455):
 
-![Cheap PSU](/assets/2023-01-21-change-psu-schematic.png)
+![Cheap PSU](/assets/2023-01-21-change-psu-schematic.svg)
 
 The JDY-25M is rated for 1.9-3.6 V. While my Chinese power supply module is rated at 3.3 V, it overshoots to 4 V on startup.
 Note that there is an LED always on, so there is always some load.
