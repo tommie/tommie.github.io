@@ -113,6 +113,12 @@ p > img.small {
     max-height: 30ex;
 }
 
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 :not(.highlight) > code {
     background-color: rgba(0, 0, 0, .025);
     padding: .1ex .5ex;
