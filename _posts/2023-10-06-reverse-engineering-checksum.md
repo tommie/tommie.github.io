@@ -432,6 +432,7 @@ There isn't much 433 MHz traffic around me, so it seems plausible there are no c
 
 Looking through the device database in RTL 433, it seems [WEC-2103](https://github.com/merbanan/rtl_433/blob/master/src/devices/wec2103.c) is the same device.
 It's missing information about the elusive checksum, and low-battery flag.
+I've filed [rtl_433/#2661](https://github.com/merbanan/rtl_433/issues/2661) to discuss adding it.
 
 ## Conclusions
 
