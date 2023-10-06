@@ -423,6 +423,9 @@ def crc4(bs: bytes, poly=3, init=0):
     return rem & 0x0F
 ```
 
+If I run this on my 1,500 captured packets, the ones that pass the 40-bit length check pass the checksum.
+There isn't much 433 MHz traffic around me, so it seems plausible there are no collisions that would corrupt them.
+
 ## Conclusions
 
 The complete decoder (save for the flag bits) is in [`tempdec.py`](https://github.com/tommie/tx07k-reverse/blob/main/tempdec.py).
