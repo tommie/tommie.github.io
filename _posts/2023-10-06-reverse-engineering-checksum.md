@@ -220,6 +220,8 @@ My power supply couldn't trigger these bits, so unlikely.
 
 I stopped the investigation since there wasn't anything obvious on the receiver display indicating the unknown bits were interesting.
 
+**Edit** The highest bit turns on when the manual transmit button is pressed.
+
 ## Checksum
 
 This took several hours (spread over three days) to figure out!
@@ -425,6 +427,11 @@ def crc4(bs: bytes, poly=3, init=0):
 
 If I run this on my 1,500 captured packets, the ones that pass the 40-bit length check pass the checksum.
 There isn't much 433 MHz traffic around me, so it seems plausible there are no collisions that would corrupt them.
+
+## RTL 433
+
+Looking through the device database in RTL 433, it seems [WEC-2103](https://github.com/merbanan/rtl_433/blob/master/src/devices/wec2103.c) is the same device.
+It's missing information about the elusive checksum, and low-battery flag.
 
 ## Conclusions
 
