@@ -51,6 +51,12 @@ and we note this is 40 bits, which seems like a round enough number to be correc
 More compactly, it's 0x5085628541 if interpreted as a big-endian integer.
 Of course, this doesn't tell us much about the data.
 
+By the way, this is a useful command to log serial data using [`socat`](https://linux.die.net/man/1/socat):
+
+```sh
+socat -b64 -u OPEN:/dev/ttyACM0,b115200,icanon=1,igncr=0,icrnl=0 STDOUT | ts 'T%s' >cap-$(date +'%Y%m%d')-1.txt
+```
+
 ## Going Fishing
 
 The next step is to collect a bunch of data and keep track of what the sensor tells us the correct temperature and humidity readings are.
