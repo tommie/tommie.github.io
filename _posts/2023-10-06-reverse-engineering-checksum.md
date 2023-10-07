@@ -228,6 +228,11 @@ I stopped the investigation since there wasn't anything obvious on the receiver 
 
 **Edit** The highest bit turns on when the manual transmit button is pressed.
 
+**Edit** After some more looking at flags, and using a hot air gun to change the temperature, the bottom two flags show the direction of the temperature.
+Bit 1 is temperature rising and bit 2 is temperature falling.
+They seem to react quickly (a single unit of change can set it off,) but there is some low-pass filtering going on, because it doesn't react to all changes.
+They reset to zero after 25-60 min of no change.
+
 ## Checksum
 
 This took several hours (spread over three days) to figure out!
