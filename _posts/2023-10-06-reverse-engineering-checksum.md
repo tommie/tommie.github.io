@@ -3,6 +3,9 @@ title: Reverse Engineering an RF Sensor Protocol Checksum
 keywords: [reverse engineering, checksum, crc, lfsr, protocol, packet, signal]
 ---
 
+**Update:** [rtl_433](https://github.com/merbanan/rtl_433/issues/2661) has merged the patch.
+See the [updated discussion](#rtl_433) below.
+
 Our landlord has the same garage door opener as us, but only has one remote.
 He's starting to be worried this failing will cause DoS.
 He's right.
@@ -421,7 +424,7 @@ After figuring this out, I finally had an answer to the frickin checksum.
 It's a broken CRC-4 with polynomial 3 and zero initial value:
 
 ```python
-def crc4(bs: bytes, poly=3, init=0):
+def crc4ish(bs: bytes, poly=3, init=0):
     rem = init
 
     for b in bs:
@@ -439,11 +442,16 @@ def crc4(bs: bytes, poly=3, init=0):
 If I run this on my 1,500 captured packets, the ones that pass the 40-bit length check pass the checksum.
 There isn't much 433 MHz traffic around me, so it seems plausible there are no collisions that would corrupt them.
 
-## RTL 433
+## RTL 433 {#rtl_433}
 
 Looking through the device database in RTL 433, it seems [WEC-2103](https://github.com/merbanan/rtl_433/blob/master/src/devices/wec2103.c) is the same device.
 It's missing information about the elusive checksum, and low-battery flag.
 I've filed [rtl_433/#2661](https://github.com/merbanan/rtl_433/issues/2661) to discuss adding it.
+
+**Update:** The checksum is now [merged](https://github.com/merbanan/rtl_433/pull/2662), which means WEC-2103 decoding is enabled by default!
+The rtl_433 maintainers felt that the code could be rewritten as a CRC-4 with an additional XOR of the last nibble at the end:
+(It also still requires moving the second-to-last nibble.)
+I completely agree that's nicer for maintainability.
 
 ## Conclusions
 
