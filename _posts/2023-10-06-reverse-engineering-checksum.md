@@ -25,6 +25,11 @@ Of course, this derailed, because there was a much more pronounced speaker in th
 Yes, yes, the key fob most likely uses KeeLoq.
 That's no fun.
 
+**Update 2** It turns out the garage door opener remote is compatible with one found at Hornbach, though it's meant for a different opener.
+             When I searched for the circuit board model number, I only got one hit on the internet: Hornbach.
+             The gamble paid off.
+             My landlord is happy to have spare remotes again.
+
 Let's reverse engineer the sensor instead!
 
 ## Periods of Silence
