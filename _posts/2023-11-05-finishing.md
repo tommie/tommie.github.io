@@ -51,6 +51,15 @@ The point of doing work is to leverage that work in the future, and that's (hope
 If I build a database engine, I could set up a SaaS, or run an open-source project.
 Either way, I **should** hope that work continues, not that I can be done with it.
 
+**Update** Perhaps that's why I like fixing things for others.
+Repairing it means restoring to a known previous state.
+This is something that can be finished.
+When I fixed my wife's sewing machine, there was nothing more I wanted to do with it.
+It was completed and handed back to her.
+(Textiles as a craft is too unpredictable to me.)
+
+## Conclusion
+
 The natural state of affairs is an ever increasing pile of prospects and tools at various milestones.
 Will that provide satisfaction?
 Work that begets work is the meaning of life?
