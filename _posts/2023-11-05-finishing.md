@@ -13,8 +13,11 @@ The following is a letter to myself, trying to work out why I've been thinking a
 
 Let's look at the hot air soldering station that suddenly wiped its own microcontroller program memory!
 Ever had Flash ROM turn into RAM?
+The apparatus' displays started to flicker, and power-cycling it made it worse, until everything just stopped.
+Re-programming the chip seemed to work, but power-cycling would wipe it.
 Yeah, that happened.
 And so I started creating a custom firmware for the AT860d soldering station.
+
 It's an almost finished project, writing a firmware from scratch in PIC16F887 assembler.
 But it's been almost finished for a few years now.
 The last thing I did was adding a front panel module to tie together the displays, button states, etc. into a cohesive user interface.
