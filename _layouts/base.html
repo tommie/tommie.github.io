@@ -10,6 +10,7 @@
   <link rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
   <link rel="stylesheet" href="{{ site.baseurl }}/style/base.css">
   <link rel="stylesheet" href="{{ site.baseurl }}/style/syntax.css">
+  {% feed_meta %}
   {% if site.analytics.ga_tracking_id != "" and jekyll.environment == "production" %}
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -28,6 +29,7 @@
       <div>
         <menu>
           <li class="{% if page.path == "index.md" %}active{% endif %}"><a href="/">Latest Articles</a></li>
+          <li><a href="/feed.xml"><img src="/assets/feed.svg" style="height:1rem"> Atom Feed</a></li>
           <li class="{% if page.path == "about.md" %}active{% endif %}"><a href="/about">About</a></li>
         </menu>
         <span class="title">{{ page.title }}</span>
