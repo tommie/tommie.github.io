@@ -1,5 +1,5 @@
 ---
-title: Speculation and Money Laundring
+title: Speculation and Money Laundering
 category: [finance, scams, bubbles, economy, video games]
 ---
 
