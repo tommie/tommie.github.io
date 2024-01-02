@@ -119,6 +119,18 @@ img.center {
     margin-right: auto;
 }
 
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.clear-both {
+    clear: both;
+}
+
 :not(.highlight) > code {
     background-color: rgba(0, 0, 0, .025);
     padding: .1ex .5ex;
