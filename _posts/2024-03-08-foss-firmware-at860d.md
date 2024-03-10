@@ -537,7 +537,7 @@ There are some issues with modules that use "callbacks," since it creates a circ
 E.g. the timer module should use one of those define-include-undefine blocks, but if I do that, it's a recursive inclusion of `modules.inc`, and it was untidy.
 On the one hand, modules need to read the current timer value, but they also need to be invoked by the timer interrupt routine.
 I could place the code in the main assembler file, like the other to avoid the recursion.
-But, alas, [nothing is ever finished](http://127.0.0.1:4000/a/2023/11/finishing).
+But, alas, [nothing is ever finished](/a/2023/11/finishing).
 
 Also, the listing file the linker produces is not the prettiest, because each module is output several times, but it was a simple modular solution.
 
