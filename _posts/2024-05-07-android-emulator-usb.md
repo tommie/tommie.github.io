@@ -44,8 +44,8 @@ Finally, my app picked up the USB device!
 ## Summary
 
 1. Install a [script](https://gist.github.com/tommie/336e908a95ded68037d5b99985d3f275) that allows you to add emulator command line parameters.
-1. Set parameters `-usb-passthrough vendorid=0x1234,productid=0x5678 -writable-system`, for whatever vendor and product IDs are.
-   E.g. using the `AVDX_EMU_PARAMS` environment variable the script will read from.
+1. Set emulator parameters `-usb-passthrough vendorid=0x1234,productid=0x5678 -writable-system`, for whatever vendor and product IDs are.
+   E.g. writing the emulator parameters to a file and using the `AVDX_EMU_PARAMS_FILE` environment variable to point the script to that file.
 1. Start Android Studio, ensuring it has the environment variable.
 1. Start an AVD with a Default Android System Image.
 1. Run
