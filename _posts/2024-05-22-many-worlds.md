@@ -113,6 +113,7 @@ Since there is absolutely nothing I can do with them, I'll just share them and h
 It seems to me that MWI would lead to misery.
 (Perhaps that's the origin of purgatory.)
 On the upside, you'd also have good stories to tell.
+On the practical side, you should take care of yourself, should the universe want you around as a statistical anomaly.
 
 Oh, and if the multiverse does have exponential branching, you should write your blog posts as early as possible.
 To maximize the impact it will have on the future.
