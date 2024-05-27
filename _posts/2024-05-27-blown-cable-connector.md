@@ -63,7 +63,7 @@ And if we carefully carve out all the parts and show the connector from the back
     <a href="/assets/2024-05-27-cable-top.jpg"><img width="60%" style="border-radius:6px; border:2px solid white; box-shadow:3px 3px 8px rgba(0,0,0,.35)" src="/assets/2024-05-27-cable-top.jpg"></a>
   </div>
 
-  <figcaption style="font-style:italic; text-align:center">.</figcaption>
+  <figcaption style="font-style:italic; text-align:center">Fewer strands in the ground connector?</figcaption>
 </figure>
 
 ## Conclusion
