@@ -44,4 +44,13 @@ No, that someone decided that 64 KiB is the smallest unit to be able to allocate
 So, I guess I'll have to resort to [MicroPython](https://micropython.org/) or something.
 I was hoping to have a VM with static typing and no garbage collector.
 
-Any suggestions?
+## WebAssembly Propsal
+
+[Issue 1512](https://github.com/WebAssembly/design/issues/1512) is a proposal for configurable page size.
+
+In March, it was moved to a [proposal repository](https://github.com/WebAssembly/custom-page-sizes/blob/main/proposals/custom-page-sizes/Overview.md), so this is looking promising.
+
+It simply defines that the page size can be specified in the WASM module file.
+Currently soft-limited to either 1 byte or (the old default) 64 KiB, which is fine with me!
+
+Hoping this lands soon.
