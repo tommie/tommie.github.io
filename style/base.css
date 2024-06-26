@@ -139,13 +139,27 @@ img.center {
 div.highlight {
     background-color: rgba(100, 100, 200, .05);
     border-left: 3px solid rgb(100, 100, 200);
+}
+
+div.highlighter-rouge {
+    overflow-x: auto;
+}
+
+.live-example {
+    background-color: rgba(150,150,50,.2);
+    border-left: 3px solid #aa3;
+}
+
+div.highlight,
+.live-example {
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
     padding: 1ex 3ex;
 }
 
-div.highlighter-rouge {
-    overflow-x: auto;
+div.highlight,
+.live-example {
+    margin-top: 2em;
 }
 
 body > main > pre,
