@@ -162,6 +162,27 @@ div.highlight,
     margin-top: 2em;
 }
 
+figcaption.filename {
+    background: rgb(100, 100, 200);
+    background: linear-gradient(0deg, rgba(0, 0, 0, .025) 0, rgba(100,100,200,1) 6px);
+    border-left: 3px solid rgb(100, 100, 200);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    color: #FAFAFA;
+    font-family: monospace;
+    padding: 4px 0 4px 3ex;
+}
+
+figcaption > p {
+    margin: 0;
+}
+
+figcaption.filename + * > div.highlight,
+figcaption.filename + * > .live-example {
+    margin-top: 0;
+    border-top-right-radius: initial;
+}
+
 body > main > pre,
 blockquote,
 figure.highlight,
