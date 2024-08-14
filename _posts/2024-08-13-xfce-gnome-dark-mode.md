@@ -10,22 +10,28 @@ Me too.
 Stock Xubuntu 24.04 had this issue for my wife.
 She prefers the Software Center over Synaptic, because they don't show a confusingly long list of packages.
 
+## Updates
+
+* @smcv responded on the #1358 issue.
+  Updated the suggested file name accordingly.
+* I filed Ubuntu bug [2076999](https://bugs.launchpad.net/ubuntu/+source/xfce4-session/+bug/2076999).
+
 ## Summary
 
 * Check the `color-scheme` key in GSettings.
-* Add a `portals.conf` that forces the `gtk` implementation (you could also use `default=*`.)
+* Add an `xfce-portals.conf` that forces the `gtk` implementation.
+  * This file is installed by default with `xfce4-session` at 4.18.4 or newer, but Ubuntu 24.04 is at 4.18.3.
+    Debian Testing is at 4.18.4.
 
 <figure markdown="1">
 <figcaption markdown="1" class="filename">
-$HOME/.config/xdg-desktop-portal/portals.conf
+$HOME/.config/xdg-desktop-portal/xfce-portals.conf
 </figcaption>
 ```ini
 [preferred]
-default=gnome;gtk;
+default=gtk;
 ```
 </figure>
-* If you use the wildcard for default, you might want to add "xfce" to the `UseIn` in `/usr/share/xdg-desktop-portal/portals/gtk.portal` to give a higher precedence.
-  But note that `UseIn` is deprecated.
 
 ## GSettings
 
@@ -142,6 +148,17 @@ The `UseIn` helps with multiple desktop environments, so why is that deprecated?
 
 Why is settings initialized differently from all the other interfaces?
 Well, there is [xdg-desktop-portal#1358](https://github.com/flatpak/xdg-desktop-portal/pull/1358) which would make it work the same.
+
+### Update: GitHub #1358
+
+@smcv [explained](https://github.com/flatpak/xdg-desktop-portal/pull/1358#issuecomment-2288489933) that the new backend `portals.conf` files actually are per-desktop environment, because the prefix (marked as asterisk in the synopsis) actually match against desktop name.
+He filed Debian bug [#1050802](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1050802) for it a year ago.
+And it is in `xfce4-session` [since version 4.18.4](https://gitlab.xfce.org/xfce/xfce4-session/-/tags/xfce4-session-4.18.4).
+Unfortunately, Ubuntu's `xfce4-session` is [at 4.18.3](https://packages.ubuntu.com/noble/xfce4-session).
+Unlucky, I guess.
+
+Debian Testing (Trixie) has 4.18.4.
+So I filed Ubuntu bug [2076999](https://bugs.launchpad.net/ubuntu/+source/xfce4-session/+bug/2076999) to ask for a backport or upgrade.
 
 ## Conclusion
 
