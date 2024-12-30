@@ -135,7 +135,7 @@ The first order of business is to invent some names:
     <text x="0.27" y="1.1" fill="black">d</text>
     <text x="1.11" y="1.1" fill="black">t</text>
   </svg>
-  <figcaption style="font-style:italic;">Names for the model</a>.</figcaption>
+  <figcaption style="font-style:italic;">Names for the model.</figcaption>
 </figure>
 
 To set up the equation system, we need to think about what relationships are the same, expressed in more than one way.
