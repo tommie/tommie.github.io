@@ -103,6 +103,41 @@ But tools are useful to be aware of.
 
 ## Finding a Solution
 
+The first order of business is to invent some names:
+
+<figure>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.1 0.4 1.7 0.5" style="height:12rem; width:20rem; font-family: Verdana, sans-serif; font-size:0.1px" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.01" stroke="none">
+    <defs>
+      <clipPath id="a"><path d="M 0,1 L 0.7071067811865476,0.29289321881345254 V 1 Z" /></clipPath>
+      <clipPath id="b"><path d="M 0.5180576773729098,1 L 0.7071067811865476,0.29289321881345254 V 1 Z" /></clipPath>
+    </defs>
+    <path d="M 0.7071067811865476,0.29289321881345254
+             A 1,1 0 0 1 1,1
+             h 0.25
+             A 0.7319423226270902,0.7319423226270902 0 0 0 0.7071067811865476,0.29289321881345254" fill="rgb(255, 200, 200)" />
+    <line x1="-1" y1="1" x2="2" y2="1" stroke="black" />
+    <line x1="0" y1="-1" x2="0" y2="2" stroke="black" />
+    <circle cx="0" cy="1" r="1" stroke="gray" />
+    <circle cx="0.5180576773729098" cy="1" r="0.7319423226270902" stroke="gray" />
+    <line x1="0" y1="1" x2="0.7071067811865476" y2="0.29289321881345254" stroke="gray" />
+    <line x1="0.5180576773729098" y1="1" x2="0.7071067811865476" y2="0.29289321881345254" stroke="gray" />
+    <circle cx="0" cy="1" r="0.03" fill="black" />
+    <circle cx="0.5180576773729098" cy="1" r="0.03" fill="black" />
+    <circle cx="0.7071067811865476" cy="0.29289321881345254" r="0.03" fill="black" />
+
+    <text x="0.23" y="0.65" fill="black">R</text>
+    <circle cx="0" cy="1" r="0.15" clip-path="url(#a)" stroke="gray" />
+    <text x="0.2" y="0.95" fill="black">ɑ</text>
+    <text x="0.52" y="0.7" fill="black">r</text>
+    <circle cx="0.5180576773729098" cy="1" r="0.15" clip-path="url(#b)" stroke="gray" />
+    <text x="0.7" y="0.9" fill="black">β</text>
+
+    <text x="0.27" y="1.1" fill="black">d</text>
+    <text x="1.11" y="1.1" fill="black">t</text>
+  </svg>
+  <figcaption style="font-style:italic; text-align:center">Names for the model</a>.</figcaption>
+</figure>
+
 To set up the equation system, we need to think about what relationships are the same, expressed in more than one way.
 The easiest to me is that the *y*-coordinate of the intersection must be the same for the two circles.
 The *x*-coordinates are the same, except with the added offset.
