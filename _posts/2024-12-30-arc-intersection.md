@@ -105,8 +105,8 @@ But tools are useful to be aware of.
 
 The first order of business is to invent some names:
 
-<figure>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.1 0.4 1.7 0.5" style="height:12rem; width:20rem; font-family: Verdana, sans-serif; font-size:0.1px" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.01" stroke="none">
+<figure style="text-align:center;">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.1 0.4 1.7 0.5" style="height:12rem; width:20rem; font-family: Verdana, sans-serif; font-size:0.1px;" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.01" stroke="none">
     <defs>
       <clipPath id="a"><path d="M 0,1 L 0.7071067811865476,0.29289321881345254 V 1 Z" /></clipPath>
       <clipPath id="b"><path d="M 0.5180576773729098,1 L 0.7071067811865476,0.29289321881345254 V 1 Z" /></clipPath>
@@ -135,7 +135,7 @@ The first order of business is to invent some names:
     <text x="0.27" y="1.1" fill="black">d</text>
     <text x="1.11" y="1.1" fill="black">t</text>
   </svg>
-  <figcaption style="font-style:italic; text-align:center">Names for the model</a>.</figcaption>
+  <figcaption style="font-style:italic;">Names for the model</a>.</figcaption>
 </figure>
 
 To set up the equation system, we need to think about what relationships are the same, expressed in more than one way.
