@@ -8,7 +8,7 @@ I mean the small visual tool that lets you manipulate objects:
 
 <figure>
   <div style="text-align:center">
-    <a href="/assets/2024-12-30-f360-gadget.png"><img width="60%" style="border-radius:6px; border:2px solid white; box-shadow:3px 3px 8px rgba(0,0,0,.35)" src="/assets/2024-12-30-f360-gadget.png"></a>
+    <a href="/assets/2024-12-30-f360-gadget.png"><img width="40%" style="border-radius:6px; border:2px solid white; box-shadow:3px 3px 8px rgba(0,0,0,.35)" src="/assets/2024-12-30-f360-gadget.png"></a>
   </div>
   <figcaption style="font-style:italic; text-align:center">An example from <a href="https://www.youtube.com/watch?v=-z_REUYier8">Fusion 360 How To Rotate</a>.</figcaption>
 </figure>
