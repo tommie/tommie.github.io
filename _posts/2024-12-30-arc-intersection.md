@@ -148,7 +148,7 @@ That leads to
   \left\{\begin{array}{ll}
     R \sin \alpha &= r \sin \beta \\
     R \cos \alpha &= r \cos \beta + d \\
-    R             &= d + r - t
+    R + t         &= r + d
   \end{array}\right.\tag{1}
   $$
 </div>
