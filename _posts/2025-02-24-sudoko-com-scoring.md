@@ -62,15 +62,18 @@ As far as I can tell, there is no extra score added at the end, or based on hist
 If you use a hint, the level's base value is used without any multipliers or time deductions.
 Using the hint resets \\(dt\\) to zero, like any correctly entered digit.
 
+Note that the \\(C\\) coefficient is 5, 10 or 15, and the min value is 10% of the base.
+Using a hint without triggering a completion would be slightly worse than using the minimum score, and completing two entities with it.
+
 ## Bottom Line
 
 The best strategy is to enter the next correct digit within five seconds of the last.
 For each level, you are nine steps from reaching the minimum, so if you take longer than \\(5 \cdot 9 = 45\\) seconds to enter the next digit, you might as well take a coffee break from the important task.
 
 Completion combos don't seem to matter, since you'd get the same multiplier regardless of when the base score is produced.
-It is best to always do completions when the base-derived score is at a maximum, so within five seconds of the previous entry.
+It is best to always do completions when the level-derived score is at a maximum, so within five seconds of the previous entry.
 
-If you have waited more than 45 seconds, using a hint allows you to circumvent the time deductions, but you miss out on completion bonuses.
+Using a hint may be better than doing a single completion at the minimum digit score, if you have some to spare.
 
 ## Implementation
 
