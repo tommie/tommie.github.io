@@ -57,13 +57,20 @@ The \\(C\\) coefficient is a completion multiplier, comprised of
 
 As far as I can tell, there is no extra score added at the end, or based on historical games.
 
+### Hints
+
+If you use a hint, the level's base value is used without any multipliers or time deductions.
+Using the hint resets \\(dt\\) to zero, like any correctly entered digit.
+
 ## Bottom Line
 
 The best strategy is to enter the next correct digit within five seconds of the last.
 For each level, you are nine steps from reaching the minimum, so if you take longer than \\(5 \cdot 9 = 45\\) seconds to enter the next digit, you might as well take a coffee break from the important task.
 
 Completion combos don't seem to matter, since you'd get the same multiplier regardless of when the base score is produced.
-It is best to always do completions when the base score is at a maximum, so within five seconds of the previous entry.
+It is best to always do completions when the base-derived score is at a maximum, so within five seconds of the previous entry.
+
+If you have waited more than 45 seconds, using a hint allows you to circumvent the time deductions, but you miss out on completion bonuses.
 
 ## Implementation
 
