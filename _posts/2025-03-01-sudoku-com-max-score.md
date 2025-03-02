@@ -113,7 +113,7 @@ Technically, I guess it's the non-linearity of the \\(C = \max(1, C\ldots)\\) fu
 But anyway.
 
 At the low end, completing each row, column and box each with its own cell, we have 27 cells that yield 5x, plus \\(E - 27\\) single points.
-At the high end, completing one row, one column and one box in per cell, we have 9 cells that yield 15x, plus \\(E - 9\\) single points.
+At the high end, completing one row, one column and one box per cell, we have 9 cells that yield 15x, plus \\(E - 9\\) single points.
 Clearly, we score more in the second case.
 
 ## Find an Upper and Lower Bound
