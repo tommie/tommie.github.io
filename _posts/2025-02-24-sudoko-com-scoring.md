@@ -15,10 +15,12 @@ These use the same scoring system, and the differences are encoded in a table:
 | Medium  |  150 |  15 |   15 |    5 |
 | Hard    |  210 |  21 |   21 |    5 |
 | Expert  |  230 |  23 |   23 |    5 |
+| Master  |  250 |  25 |   25 |    5 |
 | Extreme |  250 |  25 |   25 |    5 |
+{: .center}
 
-There is an entry for Evil, which was the old name for Extreme.
-They have the same values.
+Master is called Evil in the code.
+It has the same values as Extreme.
 
 The way this is used is that for each correctly entered digit, the score is updated with
 
@@ -81,5 +83,12 @@ This is of course fully implemented in Javascript running in your browser.
 
 The actual implementation is a bit more involved, using a timer to do the stepping down.
 The \\(C\\) coefficient doesn't use a maximum, but a fallback to 1 if it would have otherwise used a zero.
+
+> There is a [part two]({% post_url 2025-03-01-sudoku-com-max-score %}) about the maximum score.
+{: .callout-note}
+
+> * Added Master level, which I seem to have missed.
+> * I seem to have misspelled the page URL. Appologies.
+{: .callout-update}
 
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

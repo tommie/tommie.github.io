@@ -113,10 +113,13 @@ p > img.small {
     max-height: 30ex;
 }
 
-img.center {
-    display: block;
+.center {
     margin-left: auto;
     margin-right: auto;
+}
+
+img.center {
+    display: block;
 }
 
 .float-left {
@@ -200,6 +203,37 @@ li > pre {
 
 blockquote {
     font-style: italic;
+}
+
+blockquote > p:last-child {
+    margin-block-end: 0;
+}
+
+blockquote.callout-note,
+blockquote.callout-update {
+    font-style: unset;
+
+    margin-start: 0;
+    -webkit-margin-start: 0;
+    padding: 1ex 2ex;
+}
+
+blockquote.callout-note::before {
+    content: "Note";
+    color: #2d2;
+}
+
+blockquote.callout-note {
+    border-left: 4px solid #2d2;
+}
+
+blockquote.callout-update::before {
+    content: "Update";
+    color: #2aa;
+}
+
+blockquote.callout-update {
+    border-left: 4px solid #2aa;
 }
 
 /* A list item with multiple paragraphs. */
