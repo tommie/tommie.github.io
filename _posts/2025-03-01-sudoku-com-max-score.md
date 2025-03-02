@@ -58,10 +58,12 @@ figcaption {
 
 table.sudoku {
   border-collapse: collapse;
+  border: 2px solid black;
+  box-shadow: 3px 3px 3px #0004;
 }
 
 table.sudoku td {
-  border: 1px solid black;
+  border: 1px solid #aaa;
   height: 2em;
   width: 2em;
   text-align: center;
