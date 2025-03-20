@@ -210,6 +210,7 @@ blockquote > p:last-child {
 }
 
 blockquote.callout-note,
+blockquote.callout-poem,
 blockquote.callout-update {
     font-style: unset;
 
@@ -225,6 +226,11 @@ blockquote.callout-note::before {
 
 blockquote.callout-note {
     border-left: 4px solid #2d2;
+}
+
+blockquote.callout-poem {
+    border-left: 4px solid #d2d;
+    white-space: pre;
 }
 
 blockquote.callout-update::before {
