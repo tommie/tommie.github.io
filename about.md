@@ -6,6 +6,9 @@ This is a blog about technology and life. It is authored by Tommie
 Gannert, a freelance software engineer and SRE from just outside
 Stockholm, Sweden. Currently living just outside Zürich, Switzerland.
 
+I am available for projects in Europe.
+Contact me on [LinkedIn](https://www.linkedin.com/in/tommiegannert/).
+
 I love embedded devices, IoT, reverse engineering of all kinds, and
 building large-scale distributed systems. Outside of my primary
 interest in software and hardware, I enjoy cycling and thinking about
