@@ -134,6 +134,10 @@ img.center {
     clear: both;
 }
 
+h2, h3, h4, h5, h6 {
+    clear: both;
+}
+
 :not(.highlight) > code {
     background-color: rgba(0, 0, 0, .025);
     padding: .1ex .5ex;
@@ -163,6 +167,23 @@ div.highlight,
 div.highlight,
 .live-example {
     margin-top: 2em;
+}
+
+figure.float-right,
+figure.float-left {
+    margin: 2em;
+    max-width: 40%;
+}
+
+figure.float-right:first-child,
+figure.float-left:first-child,
+figure.float-right.clear-both,
+figure.float-left.clear-both {
+    margin-top: 0;
+}
+
+figure img {
+    width: 100%;
 }
 
 figcaption.filename {
