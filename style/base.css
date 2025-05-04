@@ -186,8 +186,13 @@ figure.float-left.clear-both {
     margin-top: 0;
 }
 
-figure img {
+figure.float-right img,
+figure.float-left img {
     width: 100%;
+}
+
+figure:not(.float-right, .float-left) {
+    text-align: center;
 }
 
 figcaption.filename {
