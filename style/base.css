@@ -169,6 +169,10 @@ div.highlight,
     margin-top: 2em;
 }
 
+section.index figure {
+    display: none;
+}
+
 figure.float-right,
 figure.float-left {
     margin: 2em;

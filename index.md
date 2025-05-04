@@ -2,7 +2,7 @@
 title: Latest Articles
 ---
 {% for post in site.posts %}
-<section>
+<section class="index">
   <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
   <div>
     {{ post.excerpt | markdownify }}
