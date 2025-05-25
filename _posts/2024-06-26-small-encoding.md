@@ -77,7 +77,7 @@ In the long form, the _N_ is a modified log<sub>2</sub> of the number of length 
 * `11`: 8 length bytes
 
 This modification allows us to encode short byte sequences (up to 8 bytes) with a single-byte overhead.
-The somewhat awkward position of the zero makes it easy compute the length from _N_ using a bit shift and bitwise-AND.
+The somewhat awkward position of the zero makes it easy compute to the length from _N_ using a bit shift and bitwise-AND.
 If the _length_ of the value requires 4 bytes to describe (i.e. the value is larger than 2<sup>3+2*8</sup> bytes long), the overhead of the leading bytes is so small anyway, that we might just skip 4.
 But at the smaller end, allowing zero length for short strings is useful.
 
