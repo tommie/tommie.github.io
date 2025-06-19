@@ -9,7 +9,7 @@ My default is to install Ubuntu, but there's a Windows 10 Pro license key sticke
 
 You can download Windows 11 from Microsoft, but it's an ISO file, which UEFI won't boot from.
 
-I tried using [`geteltorrito`](https://manpages.ubuntu.com/manpages/bionic/man1/geteltorito.1.html) the way I did to convert the Ubuntu installer ISO file to a USB disk image.
+I tried using [`geteltorrito`](https://manpages.ubuntu.com/manpages/bionic/man1/geteltorito.1.html) the way I did to convert the Lenovo firmware updater ISO file to a USB disk image.
 However, that gave me a 4 kiB file, not 5.9 GiB, which seemed very wrong.
 
 With UEFI, we should be able to just create a FAT file system and copy the files, right?
