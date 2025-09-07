@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helical Compression Spring Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        .input-cards {
+            background-color: var(--bs-blue-50, #e7f1ff);
+        }
+        .output-cards {
+            background-color: var(--bs-green-50, #d1e7dd);
+        }
+        [data-bs-theme="dark"] .input-cards {
+            background-color: rgba(13, 110, 253, 0.25);
+        }
+        [data-bs-theme="dark"] .output-cards {
+            background-color: rgba(25, 135, 84, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <a href="/tools/" class="btn btn-outline-secondary btn-sm">&larr; Tools</a>
+                    <h1 class="text-center mb-0">Helical Compression Spring Calculator</h1>
+                    <div style="width: 4rem;"></div> <!-- Spacer for centering -->
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 p-3 input-cards">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Physical Properties</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="materialSelect" class="form-label">Material</label>
+                                    <select class="form-select" id="materialSelect" v-model="selectedMaterial" @change="updateMaterial">
+                                        <option value="304-stainless">304 Stainless Steel</option>
+                                        <option value="65mn">65Mn Spring Steel</option>
+                                        <option value="en-10270-1">EN 10270-1 (SH)</option>
+                                        <option value="music-wire">Music Wire (ASTM A228)</option>
+                                        <option value="oil-tempered">Oil Tempered Wire (ASTM A229)</option>
+                                        <option value="chrome-silicon">Chrome Silicon (ASTM A401)</option>
+                                        <option value="inconel-x750">Inconel X-750</option>
+                                        <option value="manual">Manual Entry</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="shearModulus" class="form-label">Shear Modulus (<i>G</i>)</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="shearModulus" v-model.number="shearModulus" step="0.1" :disabled="selectedMaterial !== 'manual'">
+                                        <span class="input-group-text">GPa</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="gravity" class="form-label">Gravity (<i>g</i>)</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="gravity" v-model.number="gravity" step="0.1" placeholder="9.81">
+                                        <span class="input-group-text">m/s²</span>
+                                    </div>
+                                    <small class="text-muted">Earth: 9.81, Moon: 1.62, Mars: 3.71</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Spring Dimensions</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="wireDiameter" class="form-label">Wire Diameter (<i>d</i>)</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="wireDiameter" v-model.number="wireDiameter" step="0.1" placeholder="2.0">
+                                        <span class="input-group-text">mm</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="meanDiameter" class="form-label">Mean Coil Diameter (<i>D</i>)</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="meanDiameter" v-model.number="meanDiameter" step="0.1" placeholder="20.0">
+                                        <span class="input-group-text">mm</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="activeCoils" class="form-label">Number of Active Coils (<i>N</i>)</label>
+                                    <input type="number" class="form-control" id="activeCoils" v-model.number="activeCoils" step="1" placeholder="10">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="freeLength" class="form-label">Free Length (<i>L</i>₀)</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="freeLength" v-model.number="freeLength" step="0.1" placeholder="50.0">
+                                        <span class="input-group-text">mm</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="deflection" class="form-label">Compression Deflection (<i>δ</i>)</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="deflection" v-model.number="deflection" step="0.1" :placeholder="computedDeflection.toFixed(2)" @input="handleDeflectionInput">
+                                        <span class="input-group-text">mm</span>
+                                    </div>
+                                    <small class="text-muted">{{ deflectionManuallyModified ? 'Manual override' : 'Auto-computed' }}: {{ computedDeflection.toFixed(2) }} mm</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 p-3 output-cards">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Calculated Results</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-info" v-if="!isValidInput">
+                                    <i class="fas fa-info-circle"></i>
+                                    Please enter all parameters to see calculations.
+                                </div>
+
+                                <div v-if="isValidInput">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-6">
+                                            <strong>Spring Index (<i>C</i>):</strong>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            {{ springIndex.toFixed(2) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-sm-6">
+                                            <strong>Spring Constant (<i>k</i>):</strong>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            {{ springConstant.toFixed(2) }} N/mm
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-sm-6">
+                                            <strong>Compression Force (<i>F</i>):</strong>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            {{ compressionForceMin.toFixed(2) }} - {{ compressionForceMax.toFixed(2) }} N<br>
+                                            <small class="text-muted">
+                                                {{ (compressionForceMin / gravity).toFixed(3) }} - {{ (compressionForceMax / gravity).toFixed(3) }} kg
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-sm-6">
+                                            <strong>Compressed Length:</strong>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            {{ compressedLength.toFixed(2) }} mm
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-sm-6">
+                                            <strong>Max Shear Stress:</strong>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            {{ maxShearStress.toFixed(1) }} MPa
+                                        </div>
+                                    </div>
+
+                                    <div v-if="springIndex < 4" class="alert alert-warning mt-3">
+                                        <strong>Warning:</strong> Spring index (C) is less than 4. This may result in manufacturing difficulties and stress concentrations.
+                                    </div>
+
+                                    <div v-if="springIndex > 12" class="alert alert-warning mt-3">
+                                        <strong>Warning:</strong> Spring index (C) is greater than 12. The spring may be unstable under compression.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Formulas Used</h5>
+                            </div>
+                            <div class="card-body">
+                                <div style="font-size: 0.875em;">
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr>
+                                            <th style="text-align: left; padding-right: 10px;">Spring Index:</th>
+                                            <td style="text-align: center; width: 20px;"><i>C</i></td>
+                                            <td style="text-align: center; width: 20px;">=</td>
+                                            <td style="text-align: left; padding-left: 10px;"><span style="display: inline-block; vertical-align: middle;"><span style="display: block; border-bottom: 1px solid; text-align: center;"><i>D</i></span><span style="display: block; text-align: center;"><i>d</i></span></span></td>
+                                        </tr>
+                                        <tr><td colspan="4" style="height: 15px;"></td></tr>
+                                        <tr>
+                                            <th style="text-align: left; padding-right: 10px;">Spring Constant:</th>
+                                            <td style="text-align: center;"><i>k</i></td>
+                                            <td style="text-align: center;">=</td>
+                                            <td style="text-align: left; padding-left: 10px;"><span style="display: inline-block; vertical-align: middle;"><span style="display: block; border-bottom: 1px solid; text-align: center;"><i>G</i><i>d</i>⁴</span><span style="display: block; text-align: center;">8<i>D</i>³<i>N</i></span></span></td>
+                                        </tr>
+                                        <tr><td colspan="4" style="height: 15px;"></td></tr>
+                                        <tr>
+                                            <th style="text-align: left; padding-right: 10px;">Compression Force:</th>
+                                            <td style="text-align: center;"><i>F</i></td>
+                                            <td style="text-align: center;">=</td>
+                                            <td style="text-align: left; padding-left: 10px;"><i>k</i> × <i>δ</i></td>
+                                        </tr>
+                                        <tr><td colspan="4" style="height: 15px;"></td></tr>
+                                        <tr>
+                                            <th style="text-align: left; padding-right: 10px;">Max Shear Stress:</th>
+                                            <td style="text-align: center;"><i>τ</i></td>
+                                            <td style="text-align: center;">=</td>
+                                            <td style="text-align: left; padding-left: 10px;"><span style="display: inline-block; vertical-align: middle;"><span style="display: block; border-bottom: 1px solid; text-align: center;">8<i>F</i><i>D</i></span><span style="display: block; text-align: center;">π<i>d</i>³</span></span> × <i>K</i></td>
+                                        </tr>
+                                        <tr><td colspan="4" style="height: 15px;"></td></tr>
+                                        <tr>
+                                            <th style="text-align: left; padding-right: 10px;">Stress Factor:</th>
+                                            <td style="text-align: center;"><i>K</i></td>
+                                            <td style="text-align: center;">=</td>
+                                            <td style="text-align: left; padding-left: 10px;"><span style="display: inline-block; vertical-align: middle;"><span style="display: block; border-bottom: 1px solid; text-align: center;">4<i>C</i>-1</span><span style="display: block; text-align: center;">4<i>C</i>-4</span></span> + <span style="display: inline-block; vertical-align: middle;"><span style="display: block; border-bottom: 1px solid; text-align: center;">0.615</span><span style="display: block; text-align: center;"><i>C</i></span></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-5 py-3 text-center text-muted border-top">
+            <div class="container">
+                <div class="mb-2">
+                    <a href="/" class="text-muted me-3">Blog</a>
+                    <a href="/tools/" class="text-muted">Tools</a>
+                </div>
+                <small>&copy; 2025 Tommie Gannert. All rights reserved.</small>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Set theme based on prefers-color-scheme
+        function setColorMode() {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-bs-theme', prefersDark ? 'dark' : 'light');
+        }
+
+        // Set initial theme
+        setColorMode();
+
+        // Listen for changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setColorMode);
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    selectedMaterial: '304-stainless',
+                    shearModulus: 81,
+                    gravity: 9.81,
+                    wireDiameter: 2.0,
+                    meanDiameter: 20.0,
+                    activeCoils: 10,
+                    freeLength: 50.0,
+                    deflection: null,
+                    deflectionManuallyModified: false,
+                    materials: {
+                        '304-stainless': { shearModulus: 81, name: '304 Stainless Steel' },
+                        '65mn': { shearModulus: 80, name: '65Mn Spring Steel' },
+                        'en-10270-1': { shearModulus: 81.5, name: 'EN 10270-1 (SH)' },
+                        'music-wire': { shearModulus: 81.7, name: 'Music Wire (ASTM A228)' },
+                        'oil-tempered': { shearModulus: 79.3, name: 'Oil Tempered Wire (ASTM A229)' },
+                        'chrome-silicon': { shearModulus: 80.8, name: 'Chrome Silicon (ASTM A401)' },
+                        'inconel-x750': { shearModulus: 75, name: 'Inconel X-750' },
+                        'manual': { shearModulus: 80, name: 'Manual Entry' }
+                    },
+                    tolerance: 0.05
+                }
+            },
+            methods: {
+                updateMaterial() {
+                    if (this.selectedMaterial !== 'manual') {
+                        this.shearModulus = this.materials[this.selectedMaterial].shearModulus;
+                    }
+                },
+                handleDeflectionInput(event) {
+                    const value = event.target.value;
+                    if (value === '' || value === null || value === undefined) {
+                        this.deflectionManuallyModified = false;
+                        this.deflection = null;
+                    } else {
+                        this.deflectionManuallyModified = true;
+                    }
+                }
+            },
+            watch: {
+                computedDeflection(newVal) {
+                    if (!this.deflectionManuallyModified) {
+                        this.deflection = newVal;
+                    }
+                }
+            },
+            computed: {
+                isValidInput() {
+                    return this.shearModulus > 0 &&
+                           this.wireDiameter > 0 &&
+                           this.meanDiameter > 0 &&
+                           this.activeCoils > 0 &&
+                           this.freeLength > 0 &&
+                           this.currentDeflection >= 0 &&
+                           this.gravity > 0;
+                },
+
+                springIndex() {
+                    return this.meanDiameter / this.wireDiameter;
+                },
+
+                springConstant() {
+                    // k = Gd⁴/(8D³N)
+                    const G = this.shearModulus * 1000; // Convert GPa to MPa
+                    const d = this.wireDiameter;
+                    const D = this.meanDiameter;
+                    const N = this.activeCoils;
+
+                    return (G * Math.pow(d, 4)) / (8 * Math.pow(D, 3) * N);
+                },
+
+                compressionForce() {
+                    // F = k × δ
+                    return this.springConstant * this.currentDeflection;
+                },
+
+                compressionForceMin() {
+                    return this.compressionForce * (1 - this.tolerance);
+                },
+
+                compressionForceMax() {
+                    return this.compressionForce * (1 + this.tolerance);
+                },
+
+                currentDeflection() {
+                    if (!this.deflectionManuallyModified || this.deflection === null || this.deflection === '' || this.deflection === undefined || isNaN(this.deflection)) {
+                        return this.computedDeflection;
+                    }
+                    return this.deflection;
+                },
+
+                computedDeflection() {
+                    // Typical compression deflection is about 75-80% of free length minus solid height
+                    // Solid height ≈ wire diameter × (total coils)
+                    // Assuming total coils = active coils + 2 (end coils)
+                    const totalCoils = this.activeCoils + 2;
+                    const solidHeight = this.wireDiameter * totalCoils;
+                  const maxDeflection = this.freeLength - solidHeight;
+
+                    return Math.max(0, maxDeflection);
+                },
+
+                compressedLength() {
+                    return this.freeLength - this.currentDeflection;
+                },
+
+                wahlFactor() {
+                    const C = this.springIndex;
+                    return (4 * C - 1) / (4 * C - 4) + 0.615 / C;
+                },
+
+                maxShearStress() {
+                    // τ = 8FD/(πd³) × Wahl Factor
+                    const F = this.compressionForce;
+                    const D = this.meanDiameter;
+                    const d = this.wireDiameter;
+
+                    const basicShearStress = (8 * F * D) / (Math.PI * Math.pow(d, 3));
+                    return basicShearStress * this.wahlFactor;
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
