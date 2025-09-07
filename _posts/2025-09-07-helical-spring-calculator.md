@@ -32,7 +32,7 @@ The relationship involves several formulas:
 - Spring constant _k = Gd⁴/(8D³N)_ where _G_ is the shear modulus
 - Compression force _F = k × δ_ (deflection)
 
-Rather than using some manufacturer datasheet I found on the web and calculate it manually, I decided to build a proper web tool.
+Rather than using [Optimized dimensioning of helical compression springs](https://www.sciencedirect.com/science/article/pii/S0997753824001657) and calculate it manually, I decided to build a proper web tool.
 It's a beautiful example of what Claude Code is great at.
 
 ## Implementation with Claude Code
@@ -44,7 +44,7 @@ An excerpt of the prompts:
 
 > Build an HTML page using Vue and Bootstrap from CDN that computes the compression force (and hence spring constant) for a helical compression spring given some material properties, length diameters and number of coils.
 
-This gave a good starting point with correct computations and even listed the formulas (that match what I found in that datasheet.)
+This gave a good starting point with correct computations and even listed the formulas (that match what I found in that paper.)
 
 > Use a select box to use common materials: 304 stainless steel, 65Mn, EN 10270-1 (and other common spring materials).
 > Separate material properties from mechanical properties.
