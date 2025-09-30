@@ -20,6 +20,12 @@ Calculate spring constants and compression forces from material properties and p
 
 Decode Matter/Thread QR codes to extract commissioning information including vendor ID, product ID, discriminator, and passcode. Supports camera scanning for QR codes and includes vendor name lookup for easier device identification.
 
+## Games & Entertainment
+
+### [Block Puzzle](https://tommie.github.io/blockpuzzle2/)
+
+A bug-fixed reimplementation of [XP Game Plus' block puzzle game](https://www.xpgameplus.com/games/blockpuzzle/index.html). Features persistent settings and game state, smooth animations, optimized UI for both landscape and portrait displays, and local high scores. The original has annoying bugs, including incorrect game over detection and dead zones for block placement.
+
 ---
 
 *More tools coming soon. Each tool is designed to solve specific problems I've encountered in projects, with a focus on practical utility over feature completeness.*
