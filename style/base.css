@@ -379,6 +379,31 @@ body > footer {
     }
 }
 
+table.datatable {
+    border-collapse: collapse;
+    margin: 1.5em auto;
+}
+
+table.datatable th,
+table.datatable td {
+    padding: 0.4ex 1.2ex;
+}
+
+table.datatable thead th {
+    border-bottom: 2px solid rgb(200, 195, 230);
+    font-weight: 600;
+    text-align: center !important;
+}
+
+table.datatable tbody tr:nth-child(even) td {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+table.datatable tbody tr:has(.summary) td {
+    border-top: 3px double rgba(200, 195, 230, 0.9);
+    padding-top: 0.7ex;
+}
+
 /* Fonts */
 
 body,
